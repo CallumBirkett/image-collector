@@ -2,33 +2,48 @@
 # imagefind.py - Finds image files in a user-inputted directory and copies them to a
 #  new folder in that directory.
 
-# TODO: Turn this into a function. Q: Do we need a main() statement?
+# TODO: Create tests.
 
 import os
 import shutil
 import sys
 
-# Write a user input to detect directory path.
 
-user_input = input("Enter your directory: ")
-user_input_1 = input("Enter a name for your new folder: ")
+def getListOfFiles(dirName):
+    # create a list of file and sub directories
+    # names in the given directory
+    listOfFile = os.listdir(dirName)
+    allFiles = list()
+    # Iterate over all the entries
+    for entry in listOfFile:
+        # Create full path
+        path = os.path.join(dirName, entry)
+        # If entry is a directory then get the list of files in this directory
+        if os.path.isdir(path):
+            allFiles = allFiles + getListOfFiles(path)
+        else:
+            allFiles.append(path)
 
-# Create new folder based on user input.
-if not os.path.exists(os.path.join(user_input, user_input_1)):
-    os.mkdir(os.path.join(user_input, user_input_1))
-# else:
-#     print("The folder you are trying to create already exists.")
+    return allFiles
 
-# Create variable to call new folder.
-new_dir = os.path.join(user_input, user_input_1)
 
-# TODO: We want to search through all subfolders as well.
+def main():
 
-# Check if filename ends in a image extention. If it does, copy it to new folder.
-for filename in os.listdir(user_input):
-    if filename.endswith(('.jpeg', '.pdf', '.png', '.gif')):
-        loc = os.path.abspath(filename)
-        dest = os.path.join(new_dir, filename)
-        print('\nImage file found at: ' + loc + '\n')
-        print('Moving image to: ' + dest + '\n')
-        shutil.copy(loc, dest)
+    if not os.path.exists(os.path.join(dirName, user_input)):
+        os.mkdir(os.path.join(dirName, user_input))
+
+    listOfFileNames = getListOfFiles(dirName)
+
+    newPath = os.path.join(dirName, user_input)
+    for filename in listOfFileNames:
+        if filename.endswith(('.jpeg', '.pdf', '.png', '.gif')):
+            sourcepath = os.path.abspath(filename)
+            dest = os.path.join(newPath, filename)
+            shutil.copy(sourcepath, dest)
+
+
+dirName = input("Enter your directory: ")
+user_input = input("Enter a name for your new folder: ")
+
+if __name__ == '__main__':
+    main()
