@@ -1,7 +1,7 @@
 '''
-! python3
-# imagefind.py - Finds image files in a user-inputted directory and copies them to a
-#  new folder in that directory.
+#! python3
+ imagefind.py - Finds image files in a user-inputted directory and copies them to a
+  new folder in that directory.
 '''
 
 import os
