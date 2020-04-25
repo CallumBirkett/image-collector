@@ -10,15 +10,13 @@ import sys
 
 
 def getListOfFiles(dirName):
-    # create a list of file and sub directories
-    # names in the given directory
-    listOfFile = os.listdir(dirName)
+    # Get list of objects in diretory.
+    listDir = os.listdir(dirName)
     allFiles = list()
-    # Iterate over all the entries
-    for entry in listOfFile:
-        # Create full path
+    # For each object, get type. If object = dir, repeat function.
+    for entry in listDir:
+        # Get the path of each object.
         path = os.path.join(dirName, entry)
-        # If entry is a directory then get the list of files in this directory
         if os.path.isdir(path):
             allFiles = allFiles + getListOfFiles(path)
         else:
@@ -28,22 +26,23 @@ def getListOfFiles(dirName):
 
 
 def main():
-
-    if not os.path.exists(os.path.join(dirName, user_input)):
-        os.mkdir(os.path.join(dirName, user_input))
-
+    # Create new directory for copied files.
+    if not os.path.exists(os.path.join(dirName, newFolder)):
+        os.mkdir(os.path.join(dirName, newFolder))
+    # Set path of new dir.
+    newPath = os.path.join(dirName, newFolder)
+    # Get a list of filenames in the given dir.
     listOfFileNames = getListOfFiles(dirName)
-
-    newPath = os.path.join(dirName, user_input)
+    # For each filename check for required extension. Generate source path of file
+    # and copy to new dir.
     for filename in listOfFileNames:
-        if filename.endswith(('.jpeg', '.pdf', '.png', '.gif')):
+        if filename.lower().endswith(('.jpeg', '.pdf', '.png', '.gif')):
             sourcepath = os.path.abspath(filename)
-            dest = os.path.join(newPath, filename)
-            shutil.copy(sourcepath, dest)
+            shutil.copy(sourcepath, newPath)
 
 
 dirName = input("Enter your directory: ")
-user_input = input("Enter a name for your new folder: ")
+newFolder = input("Enter a name for your new folder: ")
 
 if __name__ == '__main__':
     main()
