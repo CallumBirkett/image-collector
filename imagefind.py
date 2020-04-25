@@ -8,7 +8,7 @@ import os
 import shutil
 import sys
 
-#  Write a user input to detect directory path.
+# Write a user input to detect directory path.
 
 user_input = input("Enter your directory: ")
 user_input_1 = input("Enter a name for your new folder: ")
