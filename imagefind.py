@@ -9,6 +9,8 @@ Use Case: Copy image files from a set of subfolders into a new folder, replacing
 Further: Script can be generalised by requiring that the user input their own choice
     of file extensions. A library could be constructed of those file extensions and
     fed to endswith().
+ imagefind.py - Finds image files in a user-inputted directory and copies them to a
+  new folder in that directory.
 '''
 
 import os
